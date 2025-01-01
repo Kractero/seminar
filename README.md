@@ -5,8 +5,8 @@ This document provides just some raw information about 2024 in cards. Some more 
 Go to section
 
 - [A Brief Comparison with 2024 and 2023](#a-brief-comparison-with-2024-and-2023)
-  - [2023](#2024)
-  - [2022](#2023)
+  - [2024](#2024)
+  - [2023](#2023)
   - [Useless Insights](#useless-insights)
 - [More Into 2024 Numbers](#more-into-2024-numbers)
   - [Rarities](#2024-rarities)
