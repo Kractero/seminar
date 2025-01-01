@@ -1,15 +1,15 @@
 <details>
   <summary>Details: Total Trades</summary>
 
-  ```sql
-  SELECT COUNT(*) FROM TRADES
-  WHERE timestamp >= strftime('%s', '2023-01-01 00:00:00')
-  AND timestamp < strftime('%s', '2024-01-01 00:00:00');
+```sql
+SELECT COUNT(*) FROM TRADES
+WHERE timestamp >= strftime('%s', '2023-01-01 00:00:00')
+AND timestamp < strftime('%s', '2024-01-01 00:00:00');
 
-  SELECT COUNT(*) FROM TRADES
-  WHERE timestamp >= strftime('%s', '2023-01-01 00:00:00')
-  AND timestamp < strftime('%s', '2024-01-01 00:00:00')
-  AND PRICE > 0;
+SELECT COUNT(*) FROM TRADES
+WHERE timestamp >= strftime('%s', '2023-01-01 00:00:00')
+AND timestamp < strftime('%s', '2024-01-01 00:00:00')
+AND PRICE > 0;
 
 SELECT SUM(price) FROM TRADES
 WHERE timestamp >= strftime('%s', '2023-01-01 00:00:00')
@@ -27,15 +27,15 @@ AND timestamp < strftime('%s', '2024-01-01 00:00:00');
 
 SELECT COUNT(DISTINCT trader) AS unique_traders
 FROM (
-    SELECT DISTINCT buyer AS trader, timestamp FROM trades
-    WHERE timestamp >= strftime('%s', '2023-01-01 00:00:00')
-      AND timestamp < strftime('%s', '2024-01-01 00:00:00')
+  SELECT DISTINCT buyer AS trader, timestamp FROM trades
+  WHERE timestamp >= strftime('%s', '2023-01-01 00:00:00')
+    AND timestamp < strftime('%s', '2024-01-01 00:00:00')
 
-    UNION
+  UNION
 
-    SELECT DISTINCT seller AS trader, timestamp FROM trades
-    WHERE timestamp >= strftime('%s', '2023-01-01 00:00:00')
-      AND timestamp < strftime('%s', '2024-01-01 00:00:00')
+  SELECT DISTINCT seller AS trader, timestamp FROM trades
+  WHERE timestamp >= strftime('%s', '2023-01-01 00:00:00')
+    AND timestamp < strftime('%s', '2024-01-01 00:00:00')
 );
 
 SELECT COUNT(*) FROM trades
@@ -47,17 +47,18 @@ SELECT COUNT(*) FROM trades
 WHERE price >= 500
 AND timestamp >= strftime('%s', '2023-01-01 00:00:00')
 AND timestamp < strftime('%s', '2024-01-01 00:00:00')
-  ```
+```
+
 </details>
 
 <details>
   <summary>Details: 2023 Rarities</summary>
 
-  ```sql
+```sql
 SELECT category, COUNT(*)
 FROM trades
 WHERE timestamp >= strftime('%s', '2023-01-01 00:00:00')
-  AND timestamp < strftime('%s', '2024-01-01 00:00:00')
+AND timestamp < strftime('%s', '2024-01-01 00:00:00')
 GROUP BY category;
 
 SELECT category, AVG(price)
@@ -74,45 +75,47 @@ AND timestamp < strftime('%s', '2024-01-01 00:00:00')
 AND PRICE > 0
 GROUP BY category;
 ```
+
 </details>
 
 <details>
   <summary>Details: 2023 Seasons </summary>
 
-  ```sql
-  SELECT season, COUNT(*)
-  FROM trades
-  WHERE timestamp >= strftime('%s', '2023-01-01 00:00:00')
-    AND timestamp < strftime('%s', '2024-01-01 00:00:00')
-  GROUP BY season;
-
-  SELECT season, AVG(price)
-  FROM trades
-  WHERE timestamp >= strftime('%s', '2023-01-01 00:00:00')
+```sql
+SELECT season, COUNT(*)
+FROM trades
+WHERE timestamp >= strftime('%s', '2023-01-01 00:00:00')
   AND timestamp < strftime('%s', '2024-01-01 00:00:00')
-  AND PRICE > 0
-  GROUP BY season;
+GROUP BY season;
 
-  SELECT season, SUM(price)
-  FROM trades
-  WHERE timestamp >= strftime('%s', '2023-01-01 00:00:00')
-  AND timestamp < strftime('%s', '2024-01-01 00:00:00')
-  AND PRICE > 0
-  GROUP BY season;
-  ```
+SELECT season, AVG(price)
+FROM trades
+WHERE timestamp >= strftime('%s', '2023-01-01 00:00:00')
+AND timestamp < strftime('%s', '2024-01-01 00:00:00')
+AND PRICE > 0
+GROUP BY season;
+
+SELECT season, SUM(price)
+FROM trades
+WHERE timestamp >= strftime('%s', '2023-01-01 00:00:00')
+AND timestamp < strftime('%s', '2024-01-01 00:00:00')
+AND PRICE > 0
+GROUP BY season;
+```
+
 </details>
 
 <details>
   <summary>Details: 2023 Rarity and Seasons</summary>
 
-  ```sql
-    SELECT category, season, SUM(price)
-    FROM trades
-    WHERE timestamp >= strftime('%s', '2023-01-01 00:00:00')
-      AND timestamp < strftime('%s', '2024-01-01 00:00:00')
-      AND PRICE > 0
-    GROUP BY category, season;
-  ```
+```sql
+  SELECT category, season, SUM(price)
+  FROM trades
+  WHERE timestamp >= strftime('%s', '2023-01-01 00:00:00')
+    AND timestamp < strftime('%s', '2024-01-01 00:00:00')
+    AND PRICE > 0
+  GROUP BY category, season;
+```
 
 </details>
 
@@ -294,13 +297,14 @@ LIMIT 10;
 </details>
 
 <details>
-    <summary>2023 Active Traders in Cards Sold</summary>
+    <summary>2023 Active Traders in Cards Gifted</summary>
 
 ```sql
 SELECT seller, COUNT(*) as trades_sold
 FROM trades
   WHERE timestamp >= strftime('%s', '2023-01-01 00:00:00')
     AND timestamp < strftime('%s', '2024-01-01 00:00:00')
+	AND PRICE = 0
 GROUP BY seller
 ORDER BY trades_sold DESC
 LIMIT 10;
@@ -594,20 +598,20 @@ LIMIT 10;
 <details>
   <summary>2023 Top 10 Trades</summary>
 
-  ```sql
-  SELECT
-      buyer,
-      seller,
-      price,
-      strftime('%Y-%m-%d', timestamp, 'unixepoch') as readable_date,
-      season || ' ' || category || ' ' || card_name AS consolidated_info
-  FROM trades
-  WHERE timestamp >= strftime('%s', '2023-01-01 00:00:00')
-  AND timestamp < strftime('%s', '2024-01-01 00:00:00')
-  AND price > 0
-  ORDER BY price DESC
-  LIMIT 10;
-  ```
+```sql
+SELECT
+    buyer,
+    seller,
+    price,
+    strftime('%Y-%m-%d', timestamp, 'unixepoch') as readable_date,
+    season || ' ' || category || ' ' || card_name AS consolidated_info
+FROM trades
+WHERE timestamp >= strftime('%s', '2023-01-01 00:00:00')
+AND timestamp < strftime('%s', '2024-01-01 00:00:00')
+AND price > 0
+ORDER BY price DESC
+LIMIT 10;
+```
 
 </details>
 
@@ -1362,17 +1366,17 @@ LIMIT 10;
 <details>
   <summary>Hour of the Day Heatmap</summary>
 
-  ```sql
-  SELECT
-    strftime('%w', timestamp, 'unixepoch') AS day_of_week,
+```sql
+SELECT
+  strftime('%w', timestamp, 'unixepoch') AS day_of_week,
 	strftime('%H', timestamp, 'unixepoch') AS hour_of_day,
-    COUNT(*) AS total_trades,
+  COUNT(*) AS total_trades,
 	SUM(PRICE)
 FROM trades
 WHERE timestamp >= strftime('%s', '2023-01-01 00:00:00')
-  AND timestamp < strftime('%s', '2024-01-01 00:00:00')
+AND timestamp < strftime('%s', '2024-01-01 00:00:00')
 GROUP BY day_of_week, hour_of_day
 ORDER BY day_of_week, hour_of_day;
-  ```
+```
 
 </details>
